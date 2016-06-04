@@ -1,0 +1,84 @@
+/**
+ * @author      OA Wu <comdan66@gmail.com>
+ * @copyright   Copyright (c) 2016 OA Wu Design
+ */
+
+@import "functions/_oa-input";
+@import "functions/_oa-hyperlink";
+@import "functions/_oa-alert";
+@import "functions/_oa-load";
+@import "functions/_oa-table";
+@import "functions/_oa-textarea";
+
+@import "functions/_oa-material";
+
+@mixin font-smoothing ($val: antialiased) {
+  -moz-osx-font-smoothing: $val;
+   -webkit-font-smoothing: $val;
+      -moz-font-smoothing: $val;
+       -ms-font-smoothing: $val;
+        -o-font-smoothing: $val;
+}
+
+@mixin clearfix () {
+  *zoom: 1;
+
+  &:after {
+    display: table;
+    content: "";
+    line-height: 0;
+    clear: both;
+  }
+}
+
+@mixin svg-color ($color: rgba(255, 255, 255, 1), $hoverColor: rgba(0, 0, 0, 1), $transition: all .3s) {
+  &, * {
+    color: $color;
+    fill: $color;
+    @include transition($transition);
+  }
+  &:hover {
+    &, * {
+      color: $hoverColor;
+      fill: $hoverColor;
+    }
+  }
+}
+@mixin split ($leftName: '.l', $rightName: '.r') {
+  @include clearfix();
+
+  #{$leftName}, #{$rightName} {
+    float: left;
+    position: relative;
+    display: inline-block;
+  }
+  #{$rightName} {
+    float: right;
+  }
+}
+@mixin split-left ($leftWidth: 100px, $leftName: '.l', $rightName: '.r') {
+  @include split($leftName, $rightName);
+
+  #{$leftName} {
+    width: $leftWidth;
+  }
+  #{$rightName} {
+    width: calc(100% - #{$leftWidth});
+  }
+}
+@mixin split-right ($rightWidth: 100px, $leftName: '.l', $rightName: '.r') {
+  @include split($leftName, $rightName);
+
+  #{$leftName} {
+    width: calc(100% - #{$rightWidth});
+  }
+  #{$rightName} {
+    width: $rightWidth;
+  }
+}
+
+@mixin overflow-docx3 () {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

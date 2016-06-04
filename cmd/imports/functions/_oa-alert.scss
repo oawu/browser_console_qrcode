@@ -1,0 +1,32 @@
+/**
+ * @author      OA Wu <comdan66@gmail.com>
+ * @copyright   Copyright (c) 2016 OA Wu Design
+ */
+
+@mixin alert ($type: 'danger', $shadow: true) {
+  padding: 5px 10px;
+  @include border-radius(4px);
+
+  @if $shadow == true {
+    @include box-shadow(0 2px 3px rgba(0,0,0,.175));
+  }
+  @if $type == 'success' {
+    color: rgba(60, 118, 61, 1);
+    background-color: rgba(223, 240, 216, 1);
+    border: 1px solid rgba(214, 233, 198, 1);
+  } @else if $type == 'info' {
+    color: rgba(49, 112, 143, 1);
+    background-color: rgba(217, 237, 247, 1);
+    border: 1px solid rgba(188, 232, 241, 1);
+
+  } @else if $type == 'warning' {
+    color: rgba(138, 109, 59, 1);
+    background-color: rgba(252, 248, 227, 1);
+    border: 1px solid rgba(250, 235, 204, 1);
+
+  } @else if $type == 'danger' {
+    color: rgba(169, 68, 66, 1);
+    background-color: rgba(242, 222, 222, 1);
+    border: 1px solid rgba(169, 68, 66, .5);
+  }
+}

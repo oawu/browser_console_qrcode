@@ -1,0 +1,136 @@
+/**
+ * @author      OA Wu <comdan66@gmail.com>
+ * @copyright   Copyright (c) 2016 OA Wu Design
+ */
+
+@mixin loading ($dimension: 80px, $borderWidth: 4, $backgroundColor: rgba(39, 39, 34, .85)) {
+  $offset: 187;
+  $duration: 1.4s;
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  z-index: 9999999;
+  background-color: $backgroundColor;
+
+  &.hide {
+    .svg {
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      @include animation(loading_rotator $duration linear infinite, loading_hide .5s);
+    }
+  }
+
+  .svg {
+    position: absolute;
+    top: calc(50% - #{$dimension / 2});
+    left: calc(50% - #{$dimension / 2});
+    width: $dimension;
+    height: $dimension;
+
+    @include animation(loading_rotator $duration linear infinite, loading_show .8s);
+    @include transition(all 1s);
+
+    .path {
+      stroke-dasharray: $offset;
+      stroke-dashoffset: 0;
+      stroke-width: $borderWidth;
+      @include transform-origin(center);
+      @include animation(loading_dash $duration ease-in-out infinite, loading_colors ($duration * 4) ease-in-out infinite);
+    }
+  }
+
+  @include keyframes(loading_hide){
+    0% {
+      top: calc(50% - #{$dimension / 2});
+      left: calc(50% - #{$dimension / 2});
+      width: $dimension;
+      height: $dimension;
+    }
+    15% {
+      $a: 0.8;
+      top: calc(50% - #{($dimension * $a) / 2});
+      left: calc(50% - #{($dimension * $a) / 2});
+      width: $dimension * $a;
+      height: $dimension * $a;
+    }
+    30% {
+      $a: 1.3;
+      top: calc(50% - #{($dimension * $a) / 2});
+      left: calc(50% - #{($dimension * $a) / 2});
+      width: $dimension * $a;
+      height: $dimension * $a;
+    }
+    100% {
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+    }
+  }
+
+  @include keyframes(loading_show){
+    0% {
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+    }
+    30% {
+      $a: 1.3;
+      top: calc(50% - #{($dimension * $a) / 2});
+      left: calc(50% - #{($dimension * $a) / 2});
+      width: $dimension * $a;
+      height: $dimension * $a;
+    }
+    75% {
+      $a: 0.8;
+      top: calc(50% - #{($dimension * $a) / 2});
+      left: calc(50% - #{($dimension * $a) / 2});
+      width: $dimension * $a;
+      height: $dimension * $a;
+    }
+    100% {
+      top: calc(50% - #{$dimension / 2});
+      left: calc(50% - #{$dimension / 2});
+      width: $dimension;
+      height: $dimension;
+    }
+  }
+  @include keyframes(loading_rotator){
+    0% { @include transform(rotate(0deg)); }
+    100% { @include transform(rotate(270deg)); }
+  }
+
+  @include keyframes(loading_colors){
+    0% { stroke: rgba(244, 67, 54, 1); }
+    20% { stroke: rgba(255, 152, 0, 1); }
+    40% { stroke: rgba(255, 235, 59, 1); }
+    60% { stroke: rgba(76, 175, 80, 1); }
+    80% { stroke: rgba(33, 150, 243, 1); }
+    100% { stroke: rgba(156, 39, 176, 1); }
+  }
+
+  @include keyframes(loading_dash){
+    0% {
+      @include opacity(0);
+      stroke-dashoffset: $offset;
+    }
+    10% {
+      @include opacity(1);
+    }
+    50% {
+      stroke-dashoffset: $offset/4;
+      @include transform(rotate(135deg));
+    }
+    90% {
+      @include opacity(1);
+    }
+    100% {
+      @include opacity(0);
+      stroke-dashoffset: $offset;
+      @include transform(rotate(450deg));
+    }
+  }
+}

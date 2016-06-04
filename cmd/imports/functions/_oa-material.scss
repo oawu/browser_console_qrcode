@@ -1,0 +1,677 @@
+/**
+ * @author      OA Wu <comdan66@gmail.com>
+ * @copyright   Copyright (c) 2016 OA Wu Design
+ */
+
+// <button></button>
+@mixin button($color: 'blue', $shadow: true) {
+  border: 0 solid transparent;
+  color: rgba(255, 255, 255, .85);
+  font-size: 15px;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 0;
+  padding: 7px 15px;
+  font-weight: bolder;
+
+  @include scale(1);
+  @include border-radius(2px);
+  @include text-shadow(0 1px 3px rgba(0, 0, 0, 0.3));
+
+  @if $shadow == true {
+    @include box-shadow(inset -1px -1px 2px rgba(0, 0, 0, 0.1), inset 1px 1px 2px rgba(255, 255, 255, 0.1), 0 3px 10px rgba(0, 0, 0, 0.16));
+  } @else {
+    @include box-shadow(inset -1px -1px 2px rgba(0, 0, 0, 0.1), inset 1px 1px 2px rgba(255, 255, 255, 0.1));
+  }
+  @include transition(all .3s);
+
+  &.jelly-effect {
+    @include animation(oa-material-button-jelly-effect .2s ease-out);
+  }
+  &[disabled] {
+    color: rgba(255, 255, 255, 0.75);
+    cursor: not-allowed;
+    @include text-shadow(none);
+    @include box-shadow(none);
+
+    &:hover {
+      color: rgba(255, 255, 255, 0.75);
+      @include box-shadow(none);
+      @include text-shadow(none);
+    }
+  }
+  &:hover {
+    color: rgba(255, 255, 255, 1);
+    @if $shadow == true {
+      @include box-shadow(inset -1px -1px 2px rgba(0, 0, 0, 0.2), inset 1px 1px 2px rgba(255, 255, 255, 0.2), 0 3px 10px 2px rgba(0, 0, 0, 0.19));
+    } @else {
+      @include box-shadow(inset -1px -1px 2px rgba(0, 0, 0, 0.2), inset 1px 1px 2px rgba(255, 255, 255, 0.2));
+    }
+  }
+  &:active {
+    @include text-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
+    @include box-shadow(inset 2px 2px 10px rgba(0, 0, 0, 0.225));
+    @include transition(none);
+  }
+  &:focus {
+    outline: 0;
+  }
+
+  $value: map-get($btns, $color);
+  @if($value){
+    background-color: rgba(nth($value, 1), nth($value, 2), nth($value, 3), 1);
+    &:hover {
+      background-color: rgba(nth($value, 1) - 10, nth($value, 2) - 10,nth($value, 3) - 10, 1);
+    }
+    &[disabled] {
+      background-color: rgba(nth($value, 1) + 70, nth($value, 2) + 70, nth($value, 3) + 70, 0.85);
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+
+  @include keyframes(oa-material-button-jelly-effect) {
+    0% {
+      @include scale(1);
+    }
+    30% {
+      @include scale(1.1);
+    }
+    80% {
+      @include scale(0.9);
+    }
+    100% {
+      @include scale(1);
+    }
+  }
+}
+
+// <div>
+//   <input type='radio' id='radio' name='radio'>
+//   <span></span>
+//   <label for='radio'>Item</label>
+// </div>
+@mixin radio($color: 'blue') {
+  $radioWidth: 16px;
+  $radioHeight: 16px;
+  $borderWidth: 2px;
+  $spacingWeight: 2px;
+
+  position: relative;
+  display: inline-block;
+
+  * {
+    vertical-align: middle;
+  }
+
+  label {
+    padding: 0;
+    padding-left: 2px;
+    cursor: pointer;
+  }
+  input[type='radio'] {
+    position: absolute;
+    z-index: 1;
+    margin: 0;
+    width: $radioWidth;
+    height: $radioHeight + 4px;
+    cursor: pointer;
+
+    @include opacity(0);
+
+    &[disabled] {
+      cursor: not-allowed;
+
+      ~ span {
+        border-color: rgba(192, 192, 192, .5);
+        ~ label {
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    ~ span {
+      border: 1px solid rgba(192, 192, 192, 1);
+      position: relative;
+      display: inline-block;
+      z-index: 0;
+      width: $radioWidth;
+      height: $radioHeight;
+      background-color: rgba(255, 255, 255, 1);
+      cursor: pointer;
+      pointer-events: none;
+      margin-top: 1px;
+
+      @include border-radius(50%);
+
+      &:after {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        margin: 0;
+        pointer-events: none;
+        background-color: rgba(192, 192, 192, 1);
+
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+
+        @include opacity(0);
+        @include border-radius(50%);
+        @include transition(all .5s cubic-bezier(0.375, -0.600, 0.000, 1.520));
+      }
+    }
+    &:checked {
+      ~ span {
+        &:after {
+          @include opacity(1);
+          top: $spacingWeight;
+          left: $spacingWeight;
+          width: calc(100% - #{$spacingWeight * 2});
+          height: calc(100% - #{$spacingWeight * 2});
+          @include animation(oa-material-radio-jelly-effect .75s ease-out);
+        }
+      }
+    }
+  }
+
+  $value: map-get($btns, $color);
+  @if($value) {
+    input[type='radio'] {
+      ~ span {
+        border-color: rgba(nth($value, 1) - 100, nth($value, 2) - 100, nth($value, 3) - 100, .4);
+
+        &:after {
+          background-color: rgba(nth($value, 1), nth($value, 2), nth($value, 3), 1);
+        }
+      }
+    }
+  }
+
+  @include keyframes(oa-material-radio-jelly-effect) {
+    0% {
+      @include scale(1);
+    }
+    30% {
+      @include scale(1.7);
+      @include opacity(0.3);
+    }
+    70% {
+      @include scale(0.9);
+      @include opacity(0.8);
+    }
+    100% {
+      @include scale(1);
+      @include opacity(1);
+    }
+  }
+}
+
+// <div>
+//   <input type='checkbox' id='checkbox'>
+//   <span></span>
+//   <label for='checkbox'>Item</label>
+// </div>
+@mixin checkbox($color: 'blue', $shadow: true) {
+  $checkboxWidth: 16px;
+  $checkboxHeight: 16px;
+  $borderWidth: 2px;
+
+  $tickWidth: ($checkboxHeight / 3) * 2;
+  $tickHeight: ($checkboxHeight / 3) * 4;
+  $tickBorderWidth: $checkboxWidth / 3;
+
+  position: relative;
+  display: inline-block;
+
+  * {
+    vertical-align: middle;
+  }
+
+  label {
+    padding-left: 2px;
+    cursor: pointer;
+  }
+
+  input[type='checkbox'] {
+    position: absolute;
+    z-index: 1;
+    margin: 0;
+    width: $checkboxWidth;
+    height: $checkboxHeight;
+    cursor: pointer;
+
+    @include opacity(0);
+
+    &[disabled] {
+      cursor: not-allowed;
+      ~ span {
+        ~ label {
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    ~ span {
+      position: relative;
+      display: inline-block;
+      z-index: 0;
+      width: $checkboxWidth;
+      height: $checkboxHeight;
+      background-color: rgba(255, 255, 255, 1);
+      cursor: pointer;
+      pointer-events: none;
+      border: solid $borderWidth rgba(192, 192, 192, 1);
+
+      @include border-radius(5px);
+      @include box-sizing(content-box);
+      @include transition(all .5s cubic-bezier(0.375, -0.600, 0.000, 1.520));
+
+      &:after {
+        content: "";
+        position: absolute;
+        display: inline-block;
+        margin: 0;
+        pointer-events: none;
+
+        bottom: 0 - $borderWidth;
+        right: 0 - $borderWidth;
+        width: $tickWidth;
+        height: $tickHeight;
+        border: $borderWidth solid transparent;
+        border-color: rgba(192, 192, 192, 1);
+        border-width: 0 $tickBorderWidth $tickBorderWidth 0;
+
+        @include simple-transform(1, 0, 0, 0, 0, 0, 0, 0);
+        @include opacity(0);
+        @include border-radius(5px);
+        @include box-sizing(border-box);
+        @include transition(all .4s ease-in-out);
+      }
+    }
+
+    &:checked {
+      ~ span {
+        @include animation(oa-material-checkbox-jelly-effect .2s ease-out);
+        &:after {
+          width: $tickWidth;
+          height: $tickHeight;
+
+          @include opacity(1);
+          @include border-radius($checkboxWidth / 5);
+          @if $shadow == true {
+            @include box-shadow(2px 2px 2px rgba(0, 0, 0, 0.4));
+          }
+          @include simple-transform(1, 45deg, $tickWidth / 4, 0 - $tickWidth, 0, 0, 0, 0);
+        }
+      }
+    }
+  }
+
+  $value: map-get($btns, $color);
+  @if($value) {
+    input[type='checkbox'] {
+      &[disabled] {
+        ~ span {
+          border-color: rgba(nth($value, 1) - 100, nth($value, 2) - 100,nth($value, 3) - 100, .25);
+        }
+      }
+      &:checked {
+        ~ span {
+          border-color: rgba(nth($value, 1) - 100, nth($value, 2) - 100,nth($value, 3) - 100, .3);
+        }
+      }
+      ~ span {
+        border-color: rgba(nth($value, 1) - 100, nth($value, 2) - 100,nth($value, 3) - 100, .4);
+        &:after {
+          border-color: rgba(nth($value, 1), nth($value, 2), nth($value, 3), 1);
+        }
+      }
+    }
+  }
+  @include keyframes(oa-material-checkbox-jelly-effect) {
+    0% {
+      @include scale(1);
+    }
+    30% {
+      @include scale(1.2);
+    }
+    80% {
+      @include scale(0.9);
+    }
+    90% {
+      @include scale(1.05);
+    }
+    100% {
+      @include scale(1);
+    }
+  }
+}
+
+// <div>
+//   <input type='checkbox' id='switch'>
+//   <span></span>
+//   <label for='switch'>Item</label>
+// </div>
+@mixin switch($full: false, $color: 'blue') {
+  $switchWidth: 50px;
+  $switchHeight: 36px;
+
+  $buttonWeight: 20px;
+  $barHeight: 10px;
+  $space: 0;
+
+  position: relative;
+  display: inline-block;
+
+  * {
+    vertical-align: middle;
+  }
+
+  label {
+    padding-left: 4px;
+    cursor: pointer;
+  }
+  input[type='checkbox'] {
+    position: absolute;
+    z-index: 1;
+    margin: 0;
+    width: $switchWidth;
+    height: $switchHeight;
+    cursor: pointer;
+
+    @include opacity(0);
+
+    &[disabled] {
+      &, * {
+        cursor: not-allowed;
+      }
+      ~ span {
+        &:after {
+          @include box-shadow(
+            inset -1px -1px 1px rgba(0, 0, 0, 0.1),
+            inset 1px 1px 1px rgba(255, 255, 255, 0.1));
+        }
+        ~ label {
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    ~ span {
+      pointer-events: none;
+      position: relative;
+      display: inline-block;
+      z-index: 0;
+      width: $switchWidth;
+      height: $switchHeight;
+      cursor: pointer;
+      pointer-events: none;
+
+      @include box-sizing(border-box);
+      @include transition(all .5s cubic-bezier(0.375, -0.600, 0.000, 1.520));
+
+      &:before, &:after {
+        @include box-sizing(border-box);
+      }
+      &:before {
+        content: "";
+        position: absolute;
+        top: calc(50% - #{$barHeight / 2});
+        left: 0;
+        display: inline-block;
+        margin: 0;
+        pointer-events: none;
+        width: 100%;
+        height: $barHeight;
+        background-color: rgba(255, 255, 255, 1);
+
+        @include border-radius($barHeight);
+
+        @include box-shadow(
+          inset 1px 1px 2px rgba(0, 0, 0, 0.175));
+      }
+      &:after {
+        content: "";
+        position: absolute;
+        top:  calc(50% - #{$buttonWeight / 2});
+        left: 0 + $space;
+        display: inline-block;
+        margin: 0;
+        pointer-events: none;
+        width: $buttonWeight;
+        height: $buttonWeight;
+        background-color: rgba(192, 192, 192, .85);
+
+        @include box-shadow(
+          inset -1px -1px 1px rgba(0, 0, 0, 0.2),
+          inset 1px 1px 1px rgba(255, 255, 255, 0.2),
+          1px 1px 2px rgba(0, 0, 0, 0.275));
+
+        @include border-radius(50%);
+        @include transition(all .5s cubic-bezier(0.25, 2, 0.69, 0.66));
+      }
+    }
+
+    &:checked {
+      ~ span {
+        &:after {
+          left: 0 + $switchWidth - $buttonWeight - $space;
+        }
+      }
+    }
+  }
+
+  $value: map-get($btns, $color);
+
+  @if($full) {
+    input[type='checkbox'] {
+      ~ span {
+        &:before {
+          top: calc(50% - #{$buttonWeight / 2});
+          height: $buttonWeight;
+        }
+        &:after {
+          left: 0;
+
+          @include box-shadow(
+            inset -1px -1px 1px rgba(0, 0, 0, 0.2),
+            inset 1px 1px 1px rgba(255, 255, 255, 0.2));
+          }
+      }
+
+      &:checked {
+        ~ span {
+          &:after {
+            left: 0 + $switchWidth - $buttonWeight;
+          }
+        }
+      }
+    }
+    @if($value) {
+      input[type='checkbox'] {
+        &[disabled] {
+          ~ span {
+            &:before {
+              background-color: rgba(nth($value, 1) + 125, nth($value, 2) + 125, nth($value, 3) + 125, 1);
+            }
+            &:after {
+              background-color: rgba(nth($value, 1) + 125, nth($value, 2) + 125, nth($value, 3) + 125, 0.9);
+            }
+          }
+        }
+        &:checked {
+          ~ span {
+            &:before {
+              background-color: rgba(nth($value, 1) + 25, nth($value, 2) + 25, nth($value, 3) + 25, 0.8);
+            }
+            &:after {
+              background-color: rgba(nth($value, 1) - 25, nth($value, 2) - 25, nth($value, 3) - 25, 1);
+            }
+          }
+        }
+        ~ span {
+          &:before {
+            background-color: rgba(nth($value, 1) + 75, nth($value, 2) + 75, nth($value, 3) + 75, 0.8);
+          }
+          &:after {
+            background-color: rgba(nth($value, 1) + 25, nth($value, 2) + 25, nth($value, 3) + 25, 1);
+          }
+        }
+      }
+    }
+  }
+  @else {
+    @if($value) {
+      input[type='checkbox'] {
+        &[disabled] {
+          ~ span {
+            &:before {
+              background-color: rgba(nth($value, 1) + 125, nth($value, 2) + 125, nth($value, 3) + 125, 1);
+            }
+            &:after {
+              background-color: rgba(nth($value, 1) + 125, nth($value, 2) + 125, nth($value, 3) + 125, 0.9);
+            }
+          }
+        }
+        &:checked {
+          ~ span {
+            &:before {
+              background-color: rgba(nth($value, 1) + 25, nth($value, 2) + 25, nth($value, 3) + 25, 0.8);
+            }
+            &:after {
+              background-color: rgba(nth($value, 1) - 25, nth($value, 2) - 25, nth($value, 3) - 25, 1);
+            }
+          }
+        }
+        ~ span {
+          &:before {
+            background-color: rgba(nth($value, 1) + 75, nth($value, 2) + 75, nth($value, 3) + 75, 0.8);
+          }
+          &:after {
+            background-color: rgba(nth($value, 1) + 25, nth($value, 2) + 25, nth($value, 3) + 25, 1);
+          }
+        }
+      }
+    }
+  }
+}
+
+// <div></div>
+@mixin paper($type: 'pure') {
+  position: relative;
+  display: block;
+  word-break: break-all;
+  padding: 10px;
+  border: 1px solid rgba(190, 191, 189, .8);
+  background-color: rgba(255, 255, 255, 1);
+  @include border-radius(2px);
+
+  @if($type == 'pure') {
+    overflow: hidden;
+    @include box-shadow(0 0 5px rgba(0, 0, 0, .15));
+  } @else if($type == 'shadow') {
+    overflow: hidden;
+    @include box-shadow(2px 2px 5px rgba(0, 0, 0, .2));
+  } @else if($type == 'convex') {
+    overflow: visible;
+    @include box-shadow(none);
+
+    &:before, &:after {
+      content: "";
+      z-index: -1;
+      position: absolute;
+      top: 0;
+      left: 10px;
+      display: inline-block;
+      width: calc(100% - 20px);
+      height: 100%;
+
+      @include box-shadow(0 0 10px 5px rgba(0, 0, 0, .2));
+      @include border-bottom-left-radius(50% 10px);
+      @include border-bottom-right-radius(50% 10px);
+      @include border-top-left-radius(50% 10px);
+      @include border-top-right-radius(50% 10px);
+    }
+    &:before {
+      top: 10px;
+      left: 0;
+      display: inline-block;
+      width: 100%;
+      height: calc(100% - 20px);
+
+      @include border-bottom-left-radius(10px 50%);
+      @include border-bottom-right-radius(10px 50%);
+      @include border-top-left-radius(10px 50%);
+      @include border-top-right-radius(10px 50%);
+    }
+  } @else if($type == 'horizontal-convex') {
+    overflow: visible;
+    @include box-shadow(none);
+
+    &:after {
+      content: "";
+      z-index: -1;
+      position: absolute;
+      top: 0;
+      left: 10px;
+      display: inline-block;
+      width: calc(100% - 20px);
+      height: 100%;
+
+      @include box-shadow(0 0 10px 5px rgba(0, 0, 0, .2));
+      @include border-bottom-left-radius(50% 10px);
+      @include border-bottom-right-radius(50% 10px);
+      @include border-top-left-radius(50% 10px);
+      @include border-top-right-radius(50% 10px);
+    }
+  } @else if($type == 'vertical-convex') {
+    overflow: visible;
+    @include box-shadow(none);
+
+    &:after {
+      content: "";
+      z-index: -1;
+      position: absolute;
+      top: 10px;
+      left: 0;
+      display: inline-block;
+      width: 100%;
+      height: calc(100% - 20px);
+
+      @include box-shadow(0 0 10px 5px rgba(0, 0, 0, .2));
+      @include border-bottom-left-radius(10px 50%);
+      @include border-bottom-right-radius(10px 50%);
+      @include border-top-left-radius(10px 50%);
+      @include border-top-right-radius(10px 50%);
+    }
+  } @else if($type == 'corner') {
+    overflow: visible;
+    @include box-shadow(none);
+    
+    &:before, &:after {
+      content: "";
+      z-index: -1;
+      position: absolute;
+      bottom: 15px;
+      left: 10px;
+
+      display: inline-block;
+
+      width: 50%;
+      max-width:300px;
+
+      max-height: 100px;
+      min-height: 10px;
+
+      @include transform(rotate(-4deg));
+      @include box-shadow(0 15px 10px rgba(31, 31, 31, .7));
+    }
+    &:after {
+      right: 10px;
+      left: auto;
+
+      @include transform(rotate(4deg));
+    }
+  }
+}

@@ -1,0 +1,61 @@
+/**
+ * @author      OA Wu <comdan66@gmail.com>
+ * @copyright   Copyright (c) 2016 OA Wu Design
+ */
+
+@import "_oa";
+
+@include font-face("Monaco", font-files("monaco/monaco.ttf", "monaco/monaco.otf"));
+// @include font-face("icomoon", font-files("icomoon/icomoon.eot", "icomoon/icomoon.woff", "icomoon/icomoon.ttf", "icomoon/icomoon.svg"));
+// [class^="icon-"], [class*=" icon-"] {
+//   font-family: 'icomoon', Monaco, "微軟正黑體", "Microsoft JhengHei";
+//   speak: none;
+//   font-style: normal;
+//   font-weight: normal;
+//   font-variant: normal;
+//   text-transform: none;
+//   line-height: 1;
+
+//   @include font-smoothing(antialiased);
+// }
+
+* {
+  &, &:after, &:before {
+    vertical-align: top;
+    @include box-sizing(border-box);
+    @include selection(rgba(150, 200, 255, 1), rgba(255, 255, 255, 1));
+    @include font-smoothing(antialiased);
+  }
+}
+
+html {
+  height: 100%;
+
+  body {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    font-size: medium;
+    font-family: Monaco, "微軟正黑體", "Microsoft JhengHei";
+    background: $mainBackgroundColor $mainBackgroundImage;
+    color: rgba(50, 50, 50, 0.8);
+
+    @include font-smoothing(antialiased);
+    
+    #container {
+      position: relative;
+      display: block;
+      margin: 0 auto;
+      max-width: $mainWidth;
+
+      padding: 0 10px;
+
+      @media screen and (min-width: #{$mainWidth}) {
+        padding: 0;
+      }
+    }
+  }
+}

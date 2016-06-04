@@ -1,0 +1,202 @@
+/**
+ * @author      OA Wu <comdan66@gmail.com>
+ * @copyright   Copyright (c) 2016 OA Wu Design
+ */
+
+@mixin option ($optionWidth: 34px, $lineHeight: 7px, $lineSpace: 3px, $lineBorderWidth: 1px, $lineBorderColor: rgba(255, 255, 255, .85), $lineBorderRadius: 2px, $lineColor: rgba(50, 60, 135, 1)) {
+
+  $optionHeight: $lineHeight * 3 + $lineSpace * 2;
+
+  position: relative;
+  width: $optionWidth;
+  display: inline-block;
+  height: $optionHeight;
+  cursor: pointer;
+  @include opacity(.8);
+  @include transition(all .5s ease);
+
+  &:after {
+    content: " ";
+    position: absolute;
+    display: block;
+    width: calc(100% - #{$lineBorderWidth * 2});
+    height: $lineHeight - $lineBorderWidth - $lineBorderWidth;
+    top: $lineBorderWidth;
+    left: $lineBorderWidth;
+    background-color: rgba(50, 60, 135, 1);
+
+    @include opacity(0);
+    @include simple-transform(1, 0, 0, 0, 0, 0, 0, 0);
+    @include transition(all .5s ease);
+    @include border-radius($lineBorderRadius);
+  }
+
+  & > * {
+    top: $lineHeight + $lineSpace;
+    left: 0;
+    width: 100%;
+
+    &, &:before, &:after {
+      position: absolute;
+      display: block;
+      height: $lineHeight;
+      background-color: $lineColor;
+      border: $lineBorderWidth solid $lineBorderColor;
+
+      @include transition(all .5s ease);
+      @include border-radius($lineBorderRadius);
+      @include simple-transform(1, 0, 0, 0, 0, 0, 0, 0);
+    }
+    &:before, &:after {
+      content: " ";
+      top: 0 - ($lineHeight + $lineSpace) - $lineBorderWidth;
+      left: 0 - $lineBorderWidth;
+      width: 100%;
+      width: calc(100% + #{$lineBorderWidth * 2});
+    }
+    &:after {
+      top: ($lineHeight + $lineSpace) - $lineBorderWidth;
+    }
+  }
+  &:hover {
+    @include opacity(1);
+  }
+  &.close {
+    @include opacity(1);
+
+    &:after {
+      @include opacity(1);
+      @include simple-transform(1, -45deg, 0, $optionHeight / 2 - $lineHeight / 2, 0, 0, $optionWidth / 2 - $lineBorderWidth, $optionHeight / 2 - $lineHeight / 2 + $lineHeight / 2 - $lineBorderWidth);
+    }
+    & > * {
+      background-color: transparent;
+      border-color: transparent;
+
+      &:before {
+        @include simple-transform(1, -45deg, 0, $optionHeight / 2 - $lineHeight / 2, 0, 0, $optionWidth / 2, $optionHeight / 2 - $lineHeight / 2 + $lineHeight / 2);
+      }
+      &:after {
+        @include simple-transform(1, 45deg, 0, -($optionHeight / 2 - $lineHeight / 2), 0, 0, $optionWidth / 2, -($optionHeight / 2 - $lineHeight));
+      }
+    }
+  }
+}
+
+@mixin home ($dimension: 100px, $roofBorderWidth: 14px, $color: rgba(39, 40, 34, 1)) {
+  $seq: 1.414213562373095;
+
+  $roofWidth: ($dimension / $seq);
+  $roofHeight: ($dimension / $seq);
+  $roomWidth: ($dimension / 3) * 2;
+  $roomHeight: ($dimension / 5) * 2;
+
+  position: relative;
+  display: inline-block;
+  width: $dimension;
+  height: $dimension;
+  background-color: rgba(0, 0, 255, 0.2);
+  text-align: left;
+  @include transition(all .5s ease);
+
+  &:after {
+    content: " ";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background-color: transparent;
+    @include transition(all .5s ease);
+  }
+
+  .roof {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    border: $roofBorderWidth solid transparent;
+    border-bottom-width: 0;
+    border-left-width: 0;
+    @include transition(all .5s ease);
+
+    &:before {
+      content: " ";
+      position: absolute;
+      top: 0 - $roofBorderWidth;
+      left: 0;
+      display: inline-block;
+      width: $roofBorderWidth;
+      height: $roofBorderWidth;
+      background-color: transparent;
+      @include transition(all .5s ease);
+    }
+  }
+
+  .room {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: inline-block;
+    width: $roofBorderWidth;
+    height: $roofBorderWidth;
+    // background-color: rgba(255, 0, 0, 0.2);
+    border: $roofBorderWidth / 2 solid transparent;
+    @include transition(all .5s ease);
+
+    &:after {
+      content: " ";
+      position: absolute;
+      top: 0 - $roofBorderWidth / 2;
+      left: 0 - $roofBorderWidth / 2;
+      display: inline-block;
+      width: $roofBorderWidth;
+      height: $roofBorderWidth;
+      // border: $roofBorderWidth / 2 solid rgba(255, 0, 0, 0.2);
+      border: $roofBorderWidth / 2 solid transparent;
+      @include transition(all .5s ease);
+    }
+  }
+
+  &:after {
+    bottom: $roomHeight - 3px;
+    right: ($dimension - 6px) / 2;
+    background-color: $color;
+  }
+  .roof {
+    width: $roofWidth;
+    height: $roofHeight;
+    @include simple-transform(1, -45deg, 0, $roofHeight / $seq, 0, 0, 0, $roofHeight / $seq);
+    border-color: $color;
+
+    &:before {
+      width: $roofWidth / 3.5;
+      background-color: $color;
+      @include simple-transform(1, -45deg, $roofWidth / 4, 0, 0, 0, $roofWidth / 4, 0);
+    }
+  }
+  .room {
+    left: ($dimension - $roomWidth) / 2;
+    width: $roomWidth;
+    height: $roomHeight;
+    border-color: $color;
+    border-left-width: $roomWidth / 3;
+    border-right-width: $roomWidth / 3;
+    border-top-width: $roomHeight / 2;
+    border-bottom-width: 0;
+
+    &:after {
+      left: 0 - $roomWidth / 3;
+      top: 0 - $roomHeight / 2;
+      width: $roomWidth / $seq;
+      height: $roomWidth / $seq;
+      border-color: $color;
+      border-width: $roomWidth / $seq / 2;
+      border-left-color: transparent;
+      border-bottom-color: transparent;
+      @include simple-transform(1, -45deg, 0, 0, 0, 0, 0, 0);
+    }
+  }
+}

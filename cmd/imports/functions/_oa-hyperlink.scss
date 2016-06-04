@@ -1,0 +1,31 @@
+/**
+ * @author      OA Wu <comdan66@gmail.com>
+ * @copyright   Copyright (c) 2016 OA Wu Design
+ */
+
+@mixin a($underLineHeight: 0, $d4UnderLine: false, $color: rgba(42, 90, 149, 0.7), $hoverColor: rgba(12, 65, 109, .85)) {
+  display: inline-block;
+
+  color: $color;
+  font-weight: normal;
+  text-decoration: none;
+  padding: 0 2px;
+  padding-bottom: $underLineHeight;
+  @include transition(all .3s);
+
+  @if($underLineHeight > 0) {
+    @if($d4UnderLine) {
+      border-bottom: $underLineHeight solid $color;
+    }
+    @else {
+      border-bottom: $underLineHeight solid transparent;
+    }
+  }
+  &.active, &:hover {
+    color: $hoverColor;
+
+    @if($underLineHeight > 0) {
+      border-bottom: $underLineHeight solid $hoverColor;
+    }
+  }
+}

@@ -1,0 +1,403 @@
+/**
+ * @author      OA Wu <comdan66@gmail.com>
+ * @copyright   Copyright (c) 2016 OA Wu Design
+ */
+
+@mixin table-form ($width: 100px) {
+  margin: 0;
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: separate;
+  $borderRadius: 3px;
+
+  &, &:after, &:before, *, *:after, *:before {
+    @include box-sizing(border-box);
+  }
+  tbody {
+    tr {
+      &:first-child {
+        th {
+          &:first-child {
+            width: $width;
+            @include border-top-left-radius($borderRadius);
+          }
+        }
+        td {
+          &:last-child {
+            @include border-top-right-radius($borderRadius);
+          }
+          &:first-child {
+            @include border-top-left-radius($borderRadius);
+          }
+        }
+      }
+      &:not(:first-child) {
+        th {
+          border-top: 0;
+        }
+        td {
+          border-top: 0;
+        }
+      }
+      &:last-child {
+        th {
+          &:first-child {
+            @include border-bottom-left-radius($borderRadius);
+          }
+        }
+        td {
+          &:last-child {
+            @include border-bottom-right-radius($borderRadius);
+          }
+          &:first-child {
+            @include border-bottom-left-radius($borderRadius);
+            @include border-bottom-right-radius($borderRadius);
+          }
+        }
+      }
+      th {
+        &:first-child {
+          border-left: 1px solid rgba(39, 40, 34, .25);
+        }
+        border: 1px solid rgba(39, 40, 34, .25);
+        background-color: rgba(39, 40, 34, .15);
+        padding: 5px 8px;
+        text-align: right;
+        border-left: 0;
+      }
+      td {
+        min-width: 200px;
+        padding: 5px;
+        text-align: left;
+        border: 1px solid rgba(39, 40, 34, .25);
+        border-left: 0;
+        background-color: rgba(255, 255, 255, .5);
+
+        &:first-child {
+          border-left: 1px solid rgba(39, 40, 34, .25);
+        }
+        label {
+          & + label {
+            &:before {
+              content: ", ";
+            }
+          }
+        }
+
+        &[colspan='2'] {
+          text-align: right;
+        }
+        .btn {
+          @include button();
+        }
+        input[type='text'] {
+          @include input();
+          width: 100%;
+        }
+        input[type='file'] {
+          @include input();
+          width: 100%;
+        }
+        textarea {
+          @include textarea();
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@mixin table-list() {
+  $borderRadius: 3px;
+  $borderColor: rgba(153, 155, 152, 1);
+  $headColor: rgba(191, 192, 191, 1);
+  $bodyColor: rgba(255, 255, 255, 1);
+  $bodyHoverColor: rgba(235, 235, 235, 1);
+  $footColor: rgba(191, 192, 191, 1);
+
+  margin: 0;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  @include box-shadow(0 1px 4px 0 rgba(153, 153, 153, 0.5));
+
+  &, &:after, &:before, *, *:after, *:before {
+      @include box-sizing(border-box);
+  }
+  thead, tbody, tfoot {
+    &:first-child {
+      tr {
+        &:first-child {
+          td, th {
+            &:first-child {
+              @include border-top-left-radius($borderRadius);
+            }
+            &:last-child {
+              @include border-top-right-radius($borderRadius);
+            }
+          }
+        }
+      }
+    }
+    &:last-child {
+      tr {
+        &:last-child {
+          td, th {
+            &:first-child {
+              @include border-bottom-left-radius($borderRadius);
+            }
+            &:last-child {
+              @include border-bottom-right-radius($borderRadius);
+            }
+            border-bottom: 1px solid $borderColor;
+          }
+        }
+      }
+    }
+
+    tr {
+      background-color: $headColor;
+      td, th {
+        border-top: 1px solid $borderColor;
+        border-left: 1px solid $borderColor;
+        font-weight: bold;
+        &:last-child {
+          border-right: 1px solid $borderColor;
+        }
+      }
+    }
+  }
+  tbody {
+    tr {
+      background-color: $bodyColor;
+      @include transition(background-color .3s);
+
+      &:hover {
+        background-color: $bodyHoverColor;
+      }
+      td {
+        word-break: break-all;
+        font-weight: normal;
+      }
+    }
+  }
+  tfoot {
+    tr {
+      background-color: $footColor;
+    }
+  }
+}
+
+@mixin table-list-rwd() {
+  $borderRadius: 3px;
+  $borderColor: rgba(153, 155, 152, 1);
+  $headColor: rgba(191, 192, 191, 1);
+  $bodyColor: rgba(255, 255, 255, 1);
+  $bodyHoverColor: rgba(240, 240, 240, 1);
+  $footColor: rgba(191, 192, 191, 1);
+  $headerHeight: 30px;
+  $changeWidth: 900px;
+
+  $headCellPadding: 5px;
+  $footCellPadding: 5px;
+  $bodyCellPadding: 5px;
+
+  // mobile
+  $trTopMargin: 10px;
+  $titleWidth: 90px;
+  $titlePadding: 5px;
+
+  margin: 0;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+
+  &, &:after, &:before, *, *:after, *:before {
+      @include box-sizing(border-box);
+  }
+  @media screen and (min-width: 0px) and (max-width: #{$changeWidth - 1px}) {
+    display: block;
+
+    thead, tbody, tfoot {
+      display: block;
+
+      tr {
+        display: block;
+        @include box-shadow(0 1px 4px 0 rgba(153, 153, 153, 0.5));
+        & + tr {
+          margin-top: $trTopMargin;
+        }
+        td, th {
+          &:first-child {
+            @include border-top-radius($borderRadius);
+          }
+          &:last-child {
+            @include border-bottom-radius($borderRadius);
+          }
+          position: relative;
+          display: block;
+          border: 1px solid $borderColor;
+          background-color: $bodyColor;
+          text-align: left;
+          padding: $bodyCellPadding;
+          padding-left: $bodyCellPadding + $titleWidth;
+          word-break: break-all;
+          width: 100%;
+          min-height: 30px;
+
+          &:not(:last-child) {
+            border-bottom: 0;
+          }
+
+          &:before {
+            content: attr(data-title);
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: inline-block;
+            width: $titleWidth;
+            padding: $titlePadding;
+            text-align: right;
+            height: 100%;
+            background-color: rgba(191, 192, 191, 1);
+            border-right: 1px solid $borderColor;
+            @include overflow-docx3();
+          }
+          &[colspan] {
+            padding-left: $bodyCellPadding;
+            text-align: center;
+            &:before {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media screen and (min-width: #{$changeWidth}) {
+    @include box-shadow(0 1px 4px 0 rgba(153, 153, 153, 0.5));
+    thead, tbody, tfoot {
+      &:first-child {
+        tr {
+          &:first-child {
+
+            td, th {
+              &:first-child {
+                @include border-top-left-radius($borderRadius);
+              }
+              &:last-child {
+                @include border-top-right-radius($borderRadius);
+              }
+              position: relative;
+              padding-top: $headerHeight + $headCellPadding;
+              &:before {
+                content: attr(data-title);
+                position: absolute;
+                top: 0;
+                left: 0;
+                display: inline-block;
+                width: 100%;
+                height: $headerHeight;
+                background-color: rgba(191, 192, 191, 1);
+                border-bottom: 1px solid $borderColor;
+              }
+              &[colspan] {
+                padding-top: $headCellPadding;
+                &:before {
+                  display: none;
+                }
+              }
+            }
+          }
+        }
+      }
+      &:last-child {
+        tr {
+          &:last-child {
+            td, th {
+              &:first-child {
+                @include border-bottom-left-radius($borderRadius);
+              }
+              &:last-child {
+                @include border-bottom-right-radius($borderRadius);
+              }
+              border-bottom: 1px solid $borderColor;
+            }
+          }
+        }
+      }
+
+      tr {
+        td, th {
+          border-top: 1px solid $borderColor;
+          border-left: 1px solid $borderColor;
+          font-weight: bold;
+          padding: $headCellPadding;
+
+          &.left {
+            text-align: left;
+          }
+          &.right {
+            text-align: right;
+          }
+          &.center {
+            text-align: center;
+          }
+          &.middle {
+            vertical-align: middle;
+          }
+          &:last-child {
+            border-right: 1px solid $borderColor;
+          }
+        }
+      }
+    }
+    tbody {
+      &:first-child {
+        tr {
+          &:first-child {
+            td, th {
+              padding-top: $headerHeight + $bodyCellPadding;
+              &[colspan] {
+                padding-top: $bodyCellPadding;
+              }
+            }
+          }
+        }
+      }
+      tr {
+        background-color: $bodyColor;
+        @include transition(background-color .3s);
+
+        &:hover {
+          background-color: $bodyHoverColor;
+        }
+        td {
+          word-break: break-all;
+          font-weight: normal;
+          padding: $bodyCellPadding;
+        }
+      }
+    }
+    tfoot {
+      &:first-child {
+        tr {
+          &:first-child {
+            td, th {
+              padding-top: $headerHeight + $footCellPadding;
+              &[colspan] {
+                padding-top: $footCellPadding;
+              }
+            }
+          }
+        }
+      }
+      tr {
+        background-color: $footColor;
+        td, th {
+          padding: $footCellPadding;
+        }
+      }
+    }
+  }
+}

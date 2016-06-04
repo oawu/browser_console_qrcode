@@ -1,0 +1,18 @@
+=== commit
+git add -A && git commit -m 'Fix html code.' && git push origin master
+
+=== no npm installed
+
+no gh-pages
+git branch -v gh-pages && git checkout gh-pages && cd cmd && sudo npm install .  && gulp minify && gulp gh-pages && cd ../ && git add -A && git commit -m 'Minify js、html, fix gh-pages path bug.' && git push origin gh-pages --force && git checkout master
+
+has gh-pages
+git branch -D gh-pages && git branch -v gh-pages && git checkout gh-pages && cd cmd && sudo npm install . && gulp minify && gulp gh-pages && cd ../ && git add -A && git commit -m 'Minify js、html, fix gh-pages path bug.' && git push origin gh-pages --force && git checkout master
+
+=== has npm installed
+
+no gh-pages
+git branch -v gh-pages && git checkout gh-pages && cd cmd && gulp minify && gulp gh-pages && cd ../ && git add -A && git commit -m 'Minify js、html, fix gh-pages path bug.' && git push origin gh-pages --force && git checkout master
+
+has gh-pages
+git branch -D gh-pages && git branch -v gh-pages && git checkout gh-pages && cd cmd && gulp minify && gulp gh-pages && cd ../ && git add -A && git commit -m 'Minify js、html, fix gh-pages path bug.' && git push origin gh-pages --force && git checkout master

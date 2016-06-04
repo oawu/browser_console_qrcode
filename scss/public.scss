@@ -107,9 +107,9 @@ html {
           }
         }
       }
+      
       div {
         @include clearfix();
-
         
         figure {
           float: left;
@@ -138,55 +138,101 @@ html {
             @include overflow-docx3();
           }
         }
-        figcaption {
-          font-size: 18px;
-        }
-        figure {
-          margin-top: 20px;
-          @media screen and (min-width: 0) and (max-width: #{745px - 1px}) {
-            width: calc((100% - 20px * (2 - 1)) / 2);
-            height: 150px;
-            &:first-child {
-              height: 150px * 2 + 20px;
+
+        &.n3 {
+          figcaption {
+            font-size: 18px;
+          }
+          figure {
+            margin-top: 20px;
+            @media screen and (min-width: 0) and (max-width: #{745px - 1px}) {
+              width: calc((100% - 20px * (2 - 1)) / 2);
+              height: 150px;
+              &:first-child {
+                height: 150px * 2 + 20px;
+              }
+              &:nth-child(n + 2) {
+                margin-left: 20px;
+              }
+              figcaption {
+                font-size: 16px;
+              }
             }
+            @media screen and (min-width: 0) and (max-width: #{$mediaMobileWidth - 1px}) {
+              margin-top: 10px;
+              width: calc((100% - 10px * (2 - 1)) / 2);
+
+              &:first-child {
+                height: 150px * 2 + 10px;
+              }
+              &:nth-child(n + 2) {
+                margin-left: 10px;
+              }
+            }
+            @media screen and (min-width: 0) and (max-width: #{$mediaMiniMobileWidth - 1px}) {
+              margin-top: 5px;
+              width: calc((100% - 5px * (2 - 1)) / 2);
+              height: 130px;
+              &:first-child {
+                height: 130px * 2 + 5px;
+              }
+              &:nth-child(n + 2) {
+                margin-left: 5px;
+              }
+            }
+            @media screen and (min-width: 745px) {
+              width: calc((100% - 20px * (3 - 1)) / 3);
+              height: 180px;
+              &:nth-child(n + 2) {
+                margin-left: 20px;
+              }
+            }
+            @media screen and (min-width: 1100px) {
+              height: 230px;
+            }
+          }
+        }
+        &.n2 {
+          figure {
+            margin-top: 20px;
+            width: calc((100% - 20px * (2 - 1)) / 2);
+            height: 300px;
             &:nth-child(n + 2) {
               margin-left: 20px;
             }
             figcaption {
-              font-size: 16px;
+              font-size: 18px;
             }
-          }
-          @media screen and (min-width: 0) and (max-width: #{$mediaMobileWidth - 1px}) {
-            margin-top: 10px;
-            width: calc((100% - 10px * (2 - 1)) / 2);
+            @media screen and (min-width: 0) and (max-width: #{$mediaMobileWidth - 1px}) {
+              margin-top: 10px;
+              width: calc((100% - 10px * (2 - 1)) / 2);
+              height: 200px;
+              &:nth-child(n + 2) {
+                margin-left: 10px;
+              }
+              figcaption {
+                font-size: 16px;
+              }
+            }
+            @media screen and (min-width: 0) and (max-width: #{520px - 1px}) {
+              height: 150px;
+            }
+            @media screen and (min-width: 0) and (max-width: #{$mediaMiniMobileWidth - 1px}) {
+              margin-top: 5px;
+              height: 130px;
+              width: calc((100% - 5px * (2 - 1)) / 2);
+              &:nth-child(n + 2) {
+                margin-left: 5px;
+              }
+              figcaption {
+                font-size: 14px;
+              }
+            }
 
-            &:first-child {
-              height: 150px * 2 + 10px;
+            @media screen and (min-width: $mediaMobileWidth) and (max-width: #{$mediaTabletWidth - 1px}) { height: 250px; }
+            @media screen and (min-width: $mediaTabletWidth) and (max-width: #{1200px - 1px}) {
+              height: 250px;
             }
-            &:nth-child(n + 2) {
-              margin-left: 10px;
-            }
-          }
-          @media screen and (min-width: 0) and (max-width: #{$mediaMiniMobileWidth - 1px}) {
-            margin-top: 5px;
-            width: calc((100% - 5px * (2 - 1)) / 2);
-            height: 130px;
-            &:first-child {
-              height: 130px * 2 + 5px;
-            }
-            &:nth-child(n + 2) {
-              margin-left: 5px;
-            }
-          }
-          @media screen and (min-width: 745px) {
-            width: calc((100% - 20px * (3 - 1)) / 3);
-            height: 180px;
-            &:nth-child(n + 2) {
-              margin-left: 20px;
-            }
-          }
-          @media screen and (min-width: 1100px) {
-            height: 230px;
           }
         }
       }
@@ -219,6 +265,68 @@ html {
           font-size: 16px;
           li {
             line-height: 30px;
+          }
+        }
+      }
+    }
+  }
+}
+
+
+body > footer {
+  margin: 0 auto;
+  @include clearfix();
+
+  @media screen and (min-width: 0px) and (max-width: #{$mediaMiniMobileWidth - 1px}) {
+    padding: 20px 15px;
+    $footerWidth: 220px;
+    > div {
+      &:first-child, &:last-child {
+        width: calc(50% - #{$footerWidth / 2});
+      }
+      &:not(:first-child):not(:last-child) {
+        font-size: 14px;
+        width: $footerWidth;
+      }
+    }
+  }
+  @media screen and (min-width: $mediaMiniMobileWidth) {
+    padding: 40px 20px;
+    $footerWidth: 250px;
+    > div {
+      &:first-child, &:last-child {
+        width: calc(50% - #{$footerWidth / 2});
+      }
+      &:not(:first-child):not(:last-child) {
+        width: $footerWidth;
+      }
+    }
+  }
+
+  > div {
+    float: left;
+    height: 100%;
+
+    &:first-child, &:last-child {
+      display: inline-block;
+      background-color: rgba(202, 200, 199, 1);
+      height: 1px;
+      margin-top: 20px;
+    }
+    &:not(:first-child):not(:last-child) {
+      display: inline-block;
+
+      > div {
+        &:first-child {
+          color: rgba(120, 120, 120, 1);
+          font-weight: bold;
+        }
+        &:last-child {
+          margin-top: 5px;
+          color: rgba(105, 105, 105, 1);
+          
+          a {
+            @include a;
           }
         }
       }

@@ -1,18 +1,41 @@
-=== commit
+
+◎ Commit
+=======================
 git add -A && git commit -m 'Fix html code.' && git push origin master
 
-=== no npm installed
 
-no gh-pages
+
+◎ Put S3 Command
+=======================
+➜ Don't minify
+git add -A && git commit -m 'Fix code.' && git push origin master && cd cmd && php put.php -b {bucket} -a {access} -s {secret} && cd ..
+
+➜ Need minify
+➜ No installed npm
+-----------------------
+git add -A && git commit -m 'Fix code.' && cd cmd && sudo npm install . && gulp minify && php put.php -b {bucket} -a {access} -s {secret} && cd .. && git checkout .
+
+➜ Need minify
+➜ Has installed npm
+-----------------------
+git add -A && git commit -m 'Fix code.' && cd cmd && gulp minify && php put.php -b {bucket} -a {access} -s {secret} && cd .. && git checkout .
+
+
+
+◎ No installed npm
+=======================
+➜ No gh-pages branch
 git branch -v gh-pages && git checkout gh-pages && cd cmd && sudo npm install .  && gulp minify && gulp gh-pages && cd ../ && git add -A && git commit -m 'Minify js、html, fix gh-pages path bug.' && git push origin gh-pages --force && git checkout master
 
-has gh-pages
+➜ Has gh-pages branch
 git branch -D gh-pages && git branch -v gh-pages && git checkout gh-pages && cd cmd && sudo npm install . && gulp minify && gulp gh-pages && cd ../ && git add -A && git commit -m 'Minify js、html, fix gh-pages path bug.' && git push origin gh-pages --force && git checkout master
 
-=== has npm installed
 
-no gh-pages
+
+◎ Has installed npm
+=======================
+➜ No gh-pages branch
 git branch -v gh-pages && git checkout gh-pages && cd cmd && gulp minify && gulp gh-pages && cd ../ && git add -A && git commit -m 'Minify js、html, fix gh-pages path bug.' && git push origin gh-pages --force && git checkout master
 
-has gh-pages
+➜ Has gh-pages branch
 git branch -D gh-pages && git branch -v gh-pages && git checkout gh-pages && cd cmd && gulp minify && gulp gh-pages && cd ../ && git add -A && git commit -m 'Minify js、html, fix gh-pages path bug.' && git push origin gh-pages --force && git checkout master

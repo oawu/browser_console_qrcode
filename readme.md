@@ -15,7 +15,7 @@
 * 關鍵**[程式碼](https://github.com/comdan66/browser_console_qrcode/blob/master/js/browser_console_qrcode.js)**在 `js/browser_console_qrcode.js` 內，程式碼有簡易註解，請各位大大服用！
 * 主要先利用**二維陣列**表示 QR Code，以 1 代表黑點、0 代表白點，再轉換成要印出的字串。
 * 接著利用 JavaScript [**eval**](http://www.w3schools.com/jsref/jsref_eval.asp) 將組合出的 console.log 字串執行！
-* GitHub 在[這裡](https://github.com/comdan66/browser_console_qrcode)，Demo 的話看[這裡](http://works.ioa.tw/browser_console_qrcode/)，可以的話幫我按一下 **GitHub 星星**吧！
+* GitHub 在[這裡](https://github.com/comdan66/browser_console_qrcode)，Demo 的話看[這裡](https://works.ioa.tw/browser_console_qrcode/index.html)，可以的話幫我按一下 **GitHub 星星**吧！
 * 主要利用 Console.log 的方式印出，其中使用基本 css 語法修飾。
 * 會使用 text-shadow 主要是要掩飾換行的**行距空白**，line-height 不能設太小，所以利用 text-shadow 掩飾空白處！
 * 因為 Safari 的 Console 對於空白的處理寬度不同，所以也需要對白點做 css 設定！

@@ -8,11 +8,12 @@
 
 
 <br/>
+
 ## 簡介
 * 請按**滑鼠右鍵**，選擇**檢視**再選擇**Console**吧！
 * Mac Chrome 電腦鍵盤快捷鍵 **Cmd + Option + J** 打開！
 * Windows、Linux Chrome 電腦鍵盤快捷鍵 **Ctrl + Shift + J** 打開！
-* 關鍵**[程式碼](https://github.com/comdan66/browser_console_qrcode/blob/master/js/browser_console_qrcode.js)**在 `js/browser_console_qrcode.js` 內，程式碼有簡易註解，請各位大大服用！
+* 關鍵[**程式碼**](https://github.com/comdan66/browser_console_qrcode/blob/master/js/browser_console_qrcode.js)在 `js/browser_console_qrcode.js` 內，程式碼有簡易註解，請各位大大服用！
 * 主要先利用**二維陣列**表示 QR Code，以 1 代表黑點、0 代表白點，再轉換成要印出的字串。
 * 接著利用 JavaScript [**eval**](http://www.w3schools.com/jsref/jsref_eval.asp) 將組合出的 console.log 字串執行！
 * GitHub 在[這裡](https://github.com/comdan66/browser_console_qrcode)，Demo 的話看[這裡](https://works.ioa.tw/browser_console_qrcode/index.html)，可以的話幫我按一下 **GitHub 星星**吧！
@@ -38,7 +39,9 @@
 <br/>
 
 ![瀏覽器 Console 上畫 QR Code！Painting QR Code on the browser Console.](img/02.png)  
-▲ 若使用 Google Chrome 則可以使用 Chrome 快捷鍵，Mac Chrome 電腦鍵盤快捷鍵 Cmd + Option + j，Windows、Linux Chrome 電腦鍵盤快捷鍵 Ctrl + Shift + J  
+▲ 若使用 Google Chrome 則可以使用 Chrome 快捷鍵
+* Mac Chrome 電腦鍵盤快捷鍵 Cmd + Option + j
+* Windows、Linux Chrome 電腦鍵盤快捷鍵 Ctrl + Shift + J  
 <br/>
 
 
